@@ -1,10 +1,12 @@
 import React, { Component} from 'react';
-import store, {incrementRed} from './store';
+import {incrementRed} from './store';
+import { connect } from 'react-redux';
 
-const Counter = ( { count, increment })=> (
-  <button className='btn btn-danger' onClick={ increment }>{ count }</button>
+const Counter = ( { count, increment, text })=> (
+  <button className='btn btn-danger' onClick={ increment }>{ text }{ count }</button>
 );
 
+/*
 class CounterContainer extends Component{
   constructor(){
     super();
@@ -23,5 +25,18 @@ class CounterContainer extends Component{
   }
 
 }
+*/
 
-export default CounterContainer;
+const mapStateToProps = (state)=> (
+  {
+    count: state.counter.red,
+    text: 'Red'
+  }
+);
+
+const mapDispatchToProps = (dispatch)=>(
+  {
+    increment: ()=> dispatch(incrementRed()) 
+  }
+);
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
